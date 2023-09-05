@@ -50,7 +50,7 @@ export default function RoutinesContainer() {
             console.log("Resetting Routines... : " + data);
             const newData = [...data]
             setRoutines(newData)
-            
+
             const activities = await  getActivities();
             setAllActivities(activities);
 
@@ -116,7 +116,7 @@ export default function RoutinesContainer() {
             //console.log("Routines Container: " + id)
             //console.log(`Routine Container activities : ${userRoutine.activities}`)
 
-            return <RoutinesCard key={id} newRoutineId={id} creatorName={userRoutine.creatorName} goal={userRoutine.goal} name={userRoutine.name}
+            return <RoutinesCard key={id + userRoutine.activities} newRoutineId={id} creatorName={userRoutine.creatorName} goal={userRoutine.goal} name={userRoutine.name}
              activities={userRoutine.activities} resetRoutines = {resetRoutines} allActivities={allActivities}></RoutinesCard>
         })}
 

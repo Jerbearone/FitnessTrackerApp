@@ -26,7 +26,7 @@ export default function AddNewActivityForm({routineId, resetRoutines, allActivit
                 console.log(`routineId: ${routineId} acitvityId: ${currentActivity.id} count: ${count} duration: ${duration}`)
                 const response = await addUserActivity(routineId,currentActivity.id, count, duration );
                 console.log("Users activity response: " + JSON.stringify(response));
-                //console.log(resetRoutines);
+                resetRoutines();
                 //await resetRoutines();
                 const newActivities = [...userActivities]
                 newActivities.push(currentActivity)

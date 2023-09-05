@@ -231,4 +231,21 @@ const getUser = async() => {
     return data;
 }
 
-export {registerUser, loginUser, getActivities, getUser, getRoutines, createNewActivity, createRoutine, getAllRoutines, addUserActivity, updateRoutineActivity}
+const deleteRoutine = async(routine_activity_id) => {
+    const token = await getToken();
+    try {
+        const response = await fetch(`${BASEURL}/routine_activities/${routine_activity_id}`, {
+            method: "DELETE",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export {registerUser, loginUser, getActivities, getUser, getRoutines, createNewActivity, createRoutine, getAllRoutines, addUserActivity, updateRoutineActivity, deleteRoutine}

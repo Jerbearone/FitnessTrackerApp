@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { updateRoutineActivity } from "../../api/api";
+import { deleteRoutine, updateRoutineActivity } from "../../api/api";
 
-export default function RoutineActivityCard({activity}){
+export default function RoutineActivityCard({activity, remapUsers, resetRoutines}){
     const [updatedCount, setUpdatedCount] = useState(0);
     const [updatedDuration, setUpdatedDuration] = useState(0);
     const [updateButtonToggle, setUpdateButtonToggle] = useState(false);
@@ -13,6 +13,13 @@ export default function RoutineActivityCard({activity}){
     const updateCurrentActivity = async(activity) => {
         const result = await updateRoutineActivity(activity.routineActivityId, updatedCount, updatedDuration);
         return result;
+    }
+
+    const removeActivity = async(activity) => {
+        const result = await (deleteRoutine(activity.routineActivityId))
+        console.log(result);
+        await remapUsers();
+        resetRoutines();
     }
 
     return (<div>
@@ -41,6 +48,11 @@ export default function RoutineActivityCard({activity}){
                 
                 
             }}>Submit</button>
+
+            <button onClick={(e)=>{
+                e.preventDefault();
+                removeActivity(activity)
+                }}>Delete</button>
             </form>}
         </div>)
 
