@@ -26,8 +26,7 @@ export default function RoutinesContainer() {
                 
             } catch (error) {
                 console.log(error);
-            }
-            
+            } 
         }
         getUserRoutines();
 
@@ -51,6 +50,9 @@ export default function RoutinesContainer() {
             console.log("Resetting Routines... : " + data);
             const newData = [...data]
             setRoutines(newData)
+            
+            const activities = await  getActivities();
+            setAllActivities(activities);
 
             const userData = await getUser();
             console.log(userData);
@@ -61,8 +63,6 @@ export default function RoutinesContainer() {
             const myNewRoutines = [...myRoutines]
             setUserRoutines(myNewRoutines);
             console.log(myRoutines);
-
-            
         }
         getAllRoutinesData();
     }
@@ -89,9 +89,6 @@ export default function RoutinesContainer() {
                 setUserRoutines(newData);
             }
         }
-
-
-
     }
 
     return (<div className="routines_container">
@@ -110,7 +107,6 @@ export default function RoutinesContainer() {
                     <label>Goal:<input type="text" onChange={handleGoalChanged}></input></label><br></br><br></br>
                     <button onClick={createActivity}>Submit</button>
                 </form>
-
             }
         </div>
 
@@ -129,10 +125,5 @@ export default function RoutinesContainer() {
             return <RoutinesCard key={singleRoutine.id} newRoutineId={singleRoutine.id} creatorName={singleRoutine.creatorName} goal={singleRoutine.goal}
              name={singleRoutine.name} resetRoutines={resetRoutines} allActivities={allActivities}></RoutinesCard>
         })}
-
-   
-
- 
-
     </div>)
 }
