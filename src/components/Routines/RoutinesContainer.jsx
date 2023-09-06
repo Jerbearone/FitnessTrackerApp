@@ -46,6 +46,12 @@ export default function RoutinesContainer() {
 
     const resetRoutines = async() => {
         const getAllRoutinesData = async() => {
+            const userData = await getUser();
+            console.log(userData);
+            setUserName(userData.username);
+            setUserId(userData.id);
+            
+            const myRoutines = await getRoutines(userData.username);
             const data = await getAllRoutines();
             console.log("Resetting Routines... : " + data);
             const newData = [...data]
@@ -54,12 +60,8 @@ export default function RoutinesContainer() {
             const activities = await  getActivities();
             setAllActivities(activities);
 
-            const userData = await getUser();
-            console.log(userData);
-            setUserName(userData.username);
-            setUserId(userData.id);
-            
-            const myRoutines = await getRoutines(userData.username);
+           
+     
             const myNewRoutines = [...myRoutines]
             setUserRoutines(myNewRoutines);
             console.log(myRoutines);
@@ -85,7 +87,9 @@ export default function RoutinesContainer() {
             const data = await createRoutine(routineName, goal, {id: userId, username: userName} )
             //console.log(data);
             if (data) {
-                const newData = await getRoutines();
+                const newData = await getRoutines(userName);
+                //const newData = await getRoutines();
+                console.log(newData)
                 setUserRoutines(newData);
             }
         }
@@ -121,7 +125,7 @@ export default function RoutinesContainer() {
         })}
 
         <h3>Public Routines</h3>
-        {routines.map((singleRoutine) => {
+        {userRoutines && routines.map((singleRoutine) => {
             return <RoutinesCard key={singleRoutine.id} newRoutineId={singleRoutine.id} creatorName={singleRoutine.creatorName} goal={singleRoutine.goal}
              name={singleRoutine.name} resetRoutines={resetRoutines} allActivities={allActivities}></RoutinesCard>
         })}
